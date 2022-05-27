@@ -97,6 +97,53 @@ select * from person where personName not like '%a'
 select * from person where personName not like '%n%'
 select * from person where personName not like 'S_____'
 
-select * from person where personName like '[an]%'
-select * from person where personName like '[a-j]'
+select * from person where personName like '[ap]%'
+select * from person where personName like '%[ap]'
+select * from person where personName like '%[ap]%'
 
+select * from person where personName like '[a-m]%'
+select * from person where personName like '%[a-m]%'
+select * from person where personName like '%[a-m]'
+
+insert into person values(11,'Sai','Solapur',22,'Null')
+insert into person values(12,'Sonu','Pune',23,'Null')
+
+--null values in sql
+--is null
+--is not null
+
+select * from person where Country is null
+select * from person where Country is not null
+select * from Person
+
+update Person set Country='India' where personId=10
+
+--order by asc and desc
+SELECT * FROM Person
+ORDER BY Country
+
+SELECT * FROM Person
+ORDER BY Country desc
+
+--aggreagte function
+--1.count 2.sum 3.avg 4.max 5.min
+
+select count(distinct City)from person
+select count(*) from Person
+
+select sum(Age) as SumAge from person
+select avg(Age) as AvgAge from person
+select min(Age) as MinAge from person
+select max(Age) as MaxAge from person
+
+--group by clause
+--group by groups rows that have a same values into the summary
+--e.g find no of person in each country
+-- group the similar col data -country,count
+--1.rule group by statement can be used aggregate function
+--2.rule the column that we will put in the group by clause that can be
+--used with select statement
+
+select * from Person
+
+select country,count(personId) as PersonCount from person group by country
