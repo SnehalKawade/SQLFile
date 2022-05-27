@@ -20,8 +20,6 @@ insert into Customer values(23,'Sayali','Pune','India',4)
 insert into Customer values(9,'Akash','Mumbai','India',Null)
 insert into Customer values(10,'Ram','Satara','India',Null)
 
-
-
 update Customer set PostalCode=101100 where CustId=4
 update Customer set City='Berlin' where CustId=3
 
@@ -69,3 +67,39 @@ select * from Customer where City like 'a%'
 
 --15.Select all records where the value of the City column ends with the letter "a".
 select * from Customer where City like '%a'
+
+--16.Select all records where the value of the City column contains the letter "a".
+select * from Customer where City like '%a%'
+ 
+ --17.Select all records where the value of the City column starts with letter "a" and ends with the letter "b".
+ select * from Customer where City like '%[a-b]%'
+
+ --18.Select all records where the value of the City column does NOT start with the letter "a".
+ select * from Customer where NOT City LIKE 'a%'
+
+ --19.Select all records where the second letter of the City is an "a".
+select * from Customer where City LIKE '_a%'
+
+--20.Select all records where the first letter of the City is an "a" or a "c" or an "s".
+select * from Customer where City LIKE '[acs]%'
+
+--21.Select all records where the first letter of the City starts with anything from an "a" to an "f".
+SELECT * FROM Customer WHERE City LIKE '[a-f]%'
+
+--23.Select all records where the first letter of the City is NOT an "a" or a "c" or an "f".
+SELECT * FROM Customer WHERE City LIKE '[^acf]%'
+
+--24.Use the IN operator to select all the records where the Country is either "Norway" or "France".
+SELECT * FROM Customer WHERE Country IN ('Norway', 'France')
+
+--25.Use the IN operator to select all the records where Country is NOT "Norway" and NOT "France".
+SELECT * FROM Customer WHERE Country NOT IN ('Norway', 'France');
+
+--26.When displaying the Customers table, make an ALIAS of the PostalCode column, the column should be called Pno instead.
+select Postalcode as pno from Customer
+
+--26.List the number of customers in each country.
+select count(Country) as countcountry from Customer
+
+--27.List the number of customers in each country, ordered by the country with the most customers first.
+select * from Customer order by Country

@@ -147,3 +147,59 @@ select max(Age) as MaxAge from person
 select * from Person
 
 select country,count(personId) as PersonCount from person group by country
+
+--joins 
+--1.inner joins
+--2.left joins
+--3.right joins
+--4.full joins
+--5.self joins
+--6.cross joins/cartesion joins
+
+select * from Person
+select * from Orders
+
+alter table orders add ProdName varchar(30)
+alter table orders add Price int
+
+insert into orders values(1,1001,1,'Laptop',35000)
+insert into orders values(2,1002,1,'Mouse',999)
+insert into orders values(3,1003,2,'TV',35000)
+insert into orders values(4,1004,2,'Keyboard',5000)
+insert into orders values(5,1005,2,'Headphone',1000)
+insert into orders values(6,1006,3,'Camera',45000)
+insert into orders values(7,1007,3,'Pendrive',35000)
+insert into orders values(8,Null,4,'Null',Null)
+insert into orders values(9,1008,5,'Null',Null)
+update Orders set orderNo=1009 where personId=5
+--1.inner join
+select p.personName,p.Country,o.ProdName,o.Price,o.orderId
+from Person p
+inner join Orders o on o.personId=p.personId
+
+select p.personName,p.Country,o.ProdName,o.Price,o.orderId
+from Person p
+inner join Orders o on o.personId=p.personId
+where p.personId=3
+
+--2.left join
+select p.personName,p.Country,o.ProdName,o.Price,o.orderId
+from Person p
+left join Orders o on o.personId=p.personId
+
+--3.right join
+select p.personName,p.Country,o.ProdName,o.Price,o.orderId
+from Person p
+right join Orders o on o.personId=p.personId
+
+--4.full join/outer join
+select p.personName,p.Country,o.ProdName,o.Price,o.orderId
+from Person p
+full join Orders o on o.personId=p.personId
+
+
+--having clause
+select country, count(personid) as personcount from person
+group by country
+having country in('india','usa')
+order by count(personid)
