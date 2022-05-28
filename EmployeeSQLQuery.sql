@@ -80,7 +80,7 @@ select * from Employee
 
 alter table Employee add ManId int
 
-alter table Employee drop column ManId
+--alter table Employee drop column ManId
 
 update Employee set manId=1 where EmpId in (2,3,4)
 update Employee set manId=5 where EmpId in (6,7,8,9)
@@ -219,3 +219,74 @@ select firstname,lastname,city,RANK() over (order by city) as rankno from Employ
 
 --REPLACE(
 select REPLACE('Good Morning','Morning','Afternoon') GreetReplace
+
+
+-- subquery in sql / inner query
+select max(salary) as maxsalary from Employee
+--1st hightest salary
+select FirstName,salary from employee where salary=(select max(salary) from Employee)
+
+-- 2nd highest 
+select FirstName,salary from Employee where salary=(
+select max(salary) from Employee where salary<>(select max(salary) from Employee))
+
+--3rd highest salary
+select FirstName,salary from Employee where salary=(
+select max(salary) from Employee where salary<(
+select max(salary) from Employee where salary<>(select max(salary) from Employee)))
+
+--view statement  
+create view HighestSal as
+select FirstName,salary from Employee where salary=(
+select max(salary) from Employee where salary<(
+select max(salary) from Employee where salary<>(select max(salary) from Employee)))
+
+select * from HighestSal
+
+--inner joins with view
+create view DeptView as
+select e.FirstName,e.LastName,e.Salary,d.DName
+from Employee e
+inner join Department d on d.DId=e.DId
+
+select * from DeptView
+
+select * from Employee
+
+--display the name of employee who take higher salary than the emp id 5
+SELECT firstname, lastname,Salary FROM Employee 
+WHERE Salary > ( SELECT Salary FROM Employee WHERE EmpId=5)
+
+--display emp details whose city is same as emp id 4
+SELECT firstname, lastname,City FROM Employee 
+WHERE City= ( SELECT City FROM Employee WHERE EmpId=4)
+
+--display emp details whose salary is gretaer than the avg slary of all emps
+SELECT firstname, lastname,Salary FROM Employee 
+WHERE Salary>( SELECT AVG(Salary) FROM Employee )
+
+--display emp whoes salary is more than avg salary of any dept
+select * from Employee where Salary > all(select avg(salary) from Employee group by DId)
+ 
+--display the sum of salary dept wise
+select DId, sum(Salary) as Sumsalary from Employee GROUP BY DId;
+
+select * from Department
+
+--display emp who get more than avg salary of sales dept
+SELECT * FROM Employee WHERE DId IN 
+(SELECT  DId FROM Department WHERE DName LIKE 'HR%') 
+AND Salary > (SELECT avg(Salary) FROM Employee)
+   
+--subquery with update statement
+select * from Employee
+
+--update the salary by 30% of emp who in developer dept
+update Employee set Salary=Salary*0.30 where DId=(select DId from Department where DName='Developer')
+update Employee set Salary=30000 where DId=(select DId from Department where DName='Developer')
+
+--subquery with delete satatement
+--delete from Employee where DId=(select DId from Department where DName='Sales')
+ 
+
+

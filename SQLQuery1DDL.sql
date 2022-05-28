@@ -203,3 +203,12 @@ select country, count(personid) as personcount from person
 group by country
 having country in('india','usa')
 order by count(personid)
+
+
+select * from person
+select * from Orders
+
+--display person name who has purchased the product whos price is >5000
+select p.personName,o.Price
+from Person p inner join Orders o on p.personId=o.personId
+where Price>500
